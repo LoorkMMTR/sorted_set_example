@@ -1,37 +1,31 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class SortedSet<E> extends AbstractSet<E> implements java.util.Set<E> {
+public class SortedSet<E extends Comparable<E>> extends AbstractSet<E> implements java.util.Set<E> {
 
-    private final transient LinkedHashMap<E,Object> map;
+    private final transient NavigableMap<E,Object> map;
 
     //Dummy value for map
     private static final Object PRESENT = new Object();
 
-    SortedSet(LinkedHashMap<E,Object> map) {
+    SortedSet(NavigableMap<E,Object> map) {
         this.map = map;
     }
 
-    //Constructors of new set
-    public SortedSet() { this(new LinkedHashMap<>()); }
-
-    public SortedSet(Collection<? extends E> c) {
-        map = new LinkedHashMap<>(Math.max((int) (c.size()/.75f) + 1, 16));
-        addAll(c);
+    //Empty comparable
+    public SortedSet(Comparator<? super E> comparator) {
+        this(new TreeMap<>(comparator));
     }
 
-    //Collection sorting
-    public void random() {
-        Map<E, Object> randomMap = new HashMap<>(map);
-        map.clear();
-        map.putAll(randomMap);
+    public SortedSet() {
+        this(new TreeMap<>());
     }
 
-    public void sort() {
-        List<E> list = map.keySet().stream().sorted().collect(Collectors.toList());
-        map.clear();
-        list.forEach(e -> map.put(e, PRESENT));
+    public SortedSet(java.util.SortedSet<E> s) {
+        this(s.comparator());
+        addAll(s);
     }
+
 
     //custom
     @Override
@@ -41,10 +35,7 @@ public class SortedSet<E> extends AbstractSet<E> implements java.util.Set<E> {
 
     @Override
     public boolean add(E e) {
-        if (map.put(e, PRESENT) == null) {
-            this.sort();
-            return true;
-        } else return false;
+        return map.put(e, PRESENT) == null;
     }
 
     //implemented from Set
@@ -58,6 +49,5 @@ public class SortedSet<E> extends AbstractSet<E> implements java.util.Set<E> {
 
     @Override
     public Iterator<E> iterator() { return map.keySet().iterator(); }
-
 
 }

@@ -1,6 +1,9 @@
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.TreeSet;
+
 
 public class Tests {
 
@@ -75,6 +78,16 @@ public class Tests {
         userSet.add(new SetUser(999999999, "zzzzUser", 0));
         userSet.add(new SetUser(0, "0user", 99));
         System.out.println("after object add: " + userSet);
+    }
+
+    @Test
+    public void userSetCollection() {
+        var col = Arrays.asList(
+                new SetUser("Ivan"),
+                new SetUser("Petr"),
+                new SetUser("Nikolay"));
+        SortedSet<SetUser> userSet = new SortedSet<>(col);
+        System.out.println("after collection add: " + userSet);
     }
 
 }

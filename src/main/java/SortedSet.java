@@ -1,14 +1,13 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SortedSet<E extends Comparable<E>> extends AbstractSet<E> implements java.util.Set<E> {
 
-    private final transient NavigableMap<E,Object> map;
+    private final transient NavigableMap<E, Object> map;
 
     //Dummy value for map
     private static final Object PRESENT = new Object();
 
-    SortedSet(NavigableMap<E,Object> map) {
+    SortedSet(NavigableMap<E, Object> map) {
         this.map = map;
     }
 
@@ -21,11 +20,10 @@ public class SortedSet<E extends Comparable<E>> extends AbstractSet<E> implement
         this(new TreeMap<>());
     }
 
-    public SortedSet(java.util.SortedSet<E> s) {
-        this(s.comparator());
-        addAll(s);
+    public SortedSet(Collection<? extends E> col) {
+        this();
+        addAll(col);
     }
-
 
     //custom
     @Override
@@ -45,9 +43,13 @@ public class SortedSet<E extends Comparable<E>> extends AbstractSet<E> implement
     }
 
     @Override
-    public int size() { return map.size(); }
+    public int size() {
+        return map.size();
+    }
 
     @Override
-    public Iterator<E> iterator() { return map.keySet().iterator(); }
+    public Iterator<E> iterator() {
+        return map.keySet().iterator();
+    }
 
 }

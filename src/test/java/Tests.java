@@ -2,7 +2,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
-import java.util.TreeSet;
 
 
 public class Tests {
@@ -37,56 +36,67 @@ public class Tests {
 
     @Test
     public void userSetDefaultSorting() {
-        SortedSet<SetUser> userSet = new SortedSet<>();
+        SortedSet<User> userSet = new SortedSet<>();
 
         while (userSet.size() < 10) {
             var name = RandomStringUtils.randomAlphabetic(6, 10);
-            var user = new SetUser(name);
+            var user = new User(name);
             userSet.add(user);
         }
 
-        userSet.add(new SetUser(0, "zzaddedUser", 99));
-        userSet.add(new SetUser(999999999, "0user", 0));
+        userSet.add(new User(0, "zzaddedUser", 99));
+        userSet.add(new User(999999999, "0user", 0));
         System.out.println("after object add: " + userSet);
     }
 
     @Test
     public void userSetSortingByName() {
-        SortedSet<SetUser> userSet = new SortedSet<>(new SetUser.SortByName());
+        SortedSet<User> userSet = new SortedSet<>(new User.SortByName());
 
         while (userSet.size() < 10) {
             var name = RandomStringUtils.randomAlphabetic(6, 10);
-            var user = new SetUser(name);
+            var user = new User(name);
             userSet.add(user);
         }
 
-        userSet.add(new SetUser(999999999, "0user", 99));
-        userSet.add(new SetUser(0, "zzzzUser", 0));
+        userSet.add(new User(999999999, "0user", 99));
+        userSet.add(new User(0, "zzzzUser", 0));
         System.out.println("after object add: " + userSet);
     }
 
     @Test
     public void userSetSortingByAge() {
-        SortedSet<SetUser> userSet = new SortedSet<>(new SetUser.SortByAge());
+        SortedSet<User> userSet = new SortedSet<>(new User.SortByAge());
 
         while (userSet.size() < 10) {
             var name = RandomStringUtils.randomAlphabetic(6, 10);
-            var user = new SetUser(name);
+            var user = new User(name);
             userSet.add(user);
         }
 
-        userSet.add(new SetUser(999999999, "zzzzUser", 0));
-        userSet.add(new SetUser(0, "0user", 99));
+        userSet.add(new User(999999999, "zzzzUser", 0));
+        userSet.add(new User(0, "0user", 99));
         System.out.println("after object add: " + userSet);
     }
 
     @Test
-    public void userSetCollection() {
+    public void userCollectionToSet() {
         var col = Arrays.asList(
-                new SetUser("Ivan"),
-                new SetUser("Petr"),
-                new SetUser("Nikolay"));
-        SortedSet<SetUser> userSet = new SortedSet<>(col);
+                new User("Ivan"),
+                new User("Petr"),
+                new User("Nikolay"));
+        SortedSet<User> userSet = new SortedSet<>(col);
+        System.out.println("after collection add: " + userSet);
+    }
+
+    @Test
+    public void bubbleCollectionToSet() {
+        var col = Arrays.asList(
+                new Bubble(10, "red"),
+                new Bubble(5, "orange"),
+                new Bubble(250, "black"));
+
+        SortedSet<Bubble> userSet = new SortedSet<>(col);
         System.out.println("after collection add: " + userSet);
     }
 

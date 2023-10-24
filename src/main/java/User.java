@@ -7,20 +7,20 @@ import java.util.Random;
 
 @Data
 @AllArgsConstructor
-public class SetUser implements Comparable<SetUser> {
+public class User implements Comparable<User> {
 
     int id;
     String name;
     int age;
 
-    public SetUser(String name) {
+    public User(String name) {
         this.id = new Random().nextInt(100000);
         this.name = name;
         this.age = new Random().nextInt(100);
     }
 
     @Override
-    public int compareTo(SetUser o) {
+    public int compareTo(User o) {
         return this.id - o.id;
     }
 
@@ -35,20 +35,20 @@ public class SetUser implements Comparable<SetUser> {
 
         if (obj == null) return false;
 
-        if (!(obj instanceof SetUser setUser)) return false;
+        if (!(obj instanceof User setUser)) return false;
 
         return this.id == setUser.id && Objects.equals(this.name, setUser.name);
     }
 
     //Comparators
-    static class SortByName implements Comparator<SetUser> {
-        public int compare(SetUser a, SetUser b) {
+    static class SortByName implements Comparator<User> {
+        public int compare(User a, User b) {
             return a.name.compareTo(b.name);
         }
     }
 
-    static class SortByAge implements Comparator<SetUser> {
-        public int compare(SetUser a, SetUser b) {
+    static class SortByAge implements Comparator<User> {
+        public int compare(User a, User b) {
             return a.age - b.age;
         }
     }

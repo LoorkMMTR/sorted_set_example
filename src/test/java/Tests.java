@@ -33,8 +33,8 @@ public class Tests {
     }
 
     @Test
-    public void userSet() {
-        SortedSet<SetUser> userSet = new SortedSet<>(SetUser::compareTo);
+    public void userSetDefaultSorting() {
+        SortedSet<SetUser> userSet = new SortedSet<>();
 
         while (userSet.size() < 10) {
             var name = RandomStringUtils.randomAlphabetic(6, 10);
@@ -42,8 +42,38 @@ public class Tests {
             userSet.add(user);
         }
 
-        userSet.add(new SetUser(0, "addedUser"));
-        userSet.add(new SetUser(999999999, "addedUser1"));
+        userSet.add(new SetUser(0, "zzaddedUser", 99));
+        userSet.add(new SetUser(999999999, "0user", 0));
+        System.out.println("after object add: " + userSet);
+    }
+
+    @Test
+    public void userSetSortingByName() {
+        SortedSet<SetUser> userSet = new SortedSet<>(new SetUser.SortByName());
+
+        while (userSet.size() < 10) {
+            var name = RandomStringUtils.randomAlphabetic(6, 10);
+            var user = new SetUser(name);
+            userSet.add(user);
+        }
+
+        userSet.add(new SetUser(999999999, "0user", 99));
+        userSet.add(new SetUser(0, "zzzzUser", 0));
+        System.out.println("after object add: " + userSet);
+    }
+
+    @Test
+    public void userSetSortingByAge() {
+        SortedSet<SetUser> userSet = new SortedSet<>(new SetUser.SortByAge());
+
+        while (userSet.size() < 10) {
+            var name = RandomStringUtils.randomAlphabetic(6, 10);
+            var user = new SetUser(name);
+            userSet.add(user);
+        }
+
+        userSet.add(new SetUser(999999999, "zzzzUser", 0));
+        userSet.add(new SetUser(0, "0user", 99));
         System.out.println("after object add: " + userSet);
     }
 
